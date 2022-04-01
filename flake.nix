@@ -19,11 +19,9 @@
     in
     {
       overlay = final: prev: {
-        haskellPackages = prev.haskellPackages.override {
-          overrides = _self: _super: {
-            "${name}" = prev.haskellPackages.callCabal2nix name self { };
-          };
-        };
+        haskellPackages = prev.haskellPackages.extend (_self: _super: {
+          "${name}" = prev.haskellPackages.callCabal2nix name self { };
+        });
       };
     } // (flake-utils.lib.eachDefaultSystem (system:
       let
