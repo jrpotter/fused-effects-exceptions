@@ -1,8 +1,6 @@
 # fused-effects-exceptions
 
-[![Hackage](https://img.shields.io/hackage/v/fused-effects-exceptions.svg)](https://hackage.haskell.org/package/fused-effects-exceptions)
 [![BSD3 license](https://img.shields.io/badge/license-BSD3-blue.svg)](LICENSE)
-[![Build Status](https://action-badges.now.sh/fused-effects/fused-effects-exceptions)](https://github.com/fused-effects/fused-effects-exceptions/actions)
 
 <!--
 Setup, hidden from the rendered markdown.
@@ -20,7 +18,7 @@ main = pure ()
 -->
 
 
-This package provides `Control.Effect.Exception`, a module that wraps the [`Control.Exception`](http://hackage.haskell.org/package/base/docs/Control-Exception.html) API from `base` with the vocabulary provided by the [`fused-effects`](http://hackage.haskell.org/package/fused-effects) library. These functions interact with GHC's support for dynamic exceptions, including functions like `catch` for exception handling and `bracket` for resource management.
+This fork provides `Control.Effect.Exception[.UnliftIO]`, a module that wraps the [`Control.Exception`](http://hackage.haskell.org/package/base/docs/Control-Exception.html) and [`UnliftIO.Exception`](https://hackage.haskell.org/package/unliftio-0.2.21.0/docs/UnliftIO-Exception.html) API from `base` with the vocabulary provided by the [`fused-effects`](http://hackage.haskell.org/package/fused-effects) library. These functions interact with GHC's support for dynamic exceptions, including functions like `catch` for exception handling and `bracket` for resource management.
 
 Please be aware that injudicious use of these functions may provoke surprising interactions with carriers that thread a monadic state as a parameter, à la the `Control.Carrier.State` types provided by `fused-effects`. For example, a function like `finally`, which does not thread any state from its body to its handler block, may discard state writes in cleanup handlers:
 

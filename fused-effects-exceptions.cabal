@@ -47,7 +47,7 @@ test-suite test
       base
     , fused-effects-exceptions
     , fused-effects
-    , tasty         ^>= 1.2
+    , tasty         ^>= 1.4
     , tasty-hunit   ^>= 0.10
     , transformers
 
