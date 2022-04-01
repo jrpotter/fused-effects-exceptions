@@ -3,13 +3,17 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-21.11";
+    flake-compat = {
+      url = github:edolstra/flake-compat;
+      flake = false;
+    };
     flake-utils = {
       url = "github:numtide/flake-utils";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = { self, nixpkgs, flake-utils }:
+  outputs = { self, nixpkgs, flake-compat, flake-utils }:
     let
       name = "fused-effects-exceptions";
     in
