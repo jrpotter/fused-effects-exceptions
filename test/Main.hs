@@ -1,16 +1,17 @@
-{-# LANGUAGE ScopedTypeVariables, TypeApplications #-}
+{-# LANGUAGE ScopedTypeVariables #-}
+{-# LANGUAGE TypeApplications #-}
 
 module Main where
 
-import Prelude hiding (ioError)
+import           Prelude hiding (ioError)
 
-import qualified Control.Carrier.State.IORef  as IOState
-import qualified Control.Carrier.State.Strict as State
 import           Control.Carrier.Lift (runM)
+import qualified Control.Carrier.State.IORef as IOState
+import qualified Control.Carrier.State.Strict as State
 import           Control.Effect.Exception
 import           Control.Effect.State
-import qualified Test.Tasty                   as Tasty
-import qualified Test.Tasty.HUnit             as HUnit
+import qualified Test.Tasty as Tasty
+import qualified Test.Tasty.HUnit as HUnit
 
 problematic :: (Has (Lift IO) sig m, Has (State Char) sig m) => m ()
 problematic =

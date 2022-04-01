@@ -1,7 +1,7 @@
 cabal-version:       2.4
 
 name:                fused-effects-exceptions
-version:             1.1.0.1
+version:             1.1.0.2
 synopsis:            Handle exceptions thrown in IO with fused-effects.
 description:         Provides Resource and Catch effects capable of reacting to and catching GHC's dynamic exceptions.
 homepage:            https://github.com/fused-effects/fused-effects-exceptions#readme
@@ -33,10 +33,14 @@ library
   exposed-modules:
     Control.Carrier.State.IORef
     Control.Effect.Exception
+    Control.Effect.Exception.UnliftIO
+  other-modules:
+    Control.Effect.Exception.Internal
   build-depends:
       base             >= 4.7 && < 5
     , fused-effects    >= 1.1
     , transformers     >= 0.4 && < 0.6
+    , unliftio-core    >= 0.2 && < 0.3
 
 test-suite test
   import: common
