@@ -31,7 +31,6 @@ library
   import: common
   hs-source-dirs: src
   exposed-modules:
-    Control.Carrier.State.IORef
     Control.Effect.Exception
     Control.Effect.Exception.UnliftIO
   other-modules:

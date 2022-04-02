@@ -6,7 +6,6 @@ module Main where
 import           Prelude hiding (ioError)
 
 import           Control.Carrier.Lift (runM)
-import qualified Control.Carrier.State.IORef as IOState
 import qualified Control.Carrier.State.Strict as State
 import           Control.Effect.Exception
 import           Control.Effect.State
@@ -23,16 +22,10 @@ testStateDropsWrites = HUnit.testCase "State.Strict drops writes" $ do
   result <- State.execState 'a' problematic
   result HUnit.@?= 'a' -- writes are lost
 
-testIOStatePreservesWrites :: Tasty.TestTree
-testIOStatePreservesWrites = HUnit.testCase "State.IORef preserves writes" $ do
-  result <- IOState.execState 'a' problematic
-  result HUnit.@?= 'x'
-
 tests :: Tasty.TestTree
 tests = Tasty.testGroup "Control.Carrier.Exception"
   [ Tasty.testGroup "finally"
     [ testStateDropsWrites
-    , testIOStatePreservesWrites
     ]
   ]
 
