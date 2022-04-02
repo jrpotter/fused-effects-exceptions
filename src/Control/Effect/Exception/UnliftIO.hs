@@ -7,7 +7,7 @@
 {-# LANGUAGE TypeApplications #-}
 -- | Operations from "Control.Exception" and "UnliftIO.Exception" lifted into effectful contexts using 'Control.Effect.Lift.Lift'.
 --
--- @since 1.1.0.2
+-- @since 1.1.2.0
 module Control.Effect.Exception.UnliftIO
 ( -- * Lifted "Control.Exception" operations
   throwIO
@@ -80,7 +80,7 @@ import           Prelude hiding (ioError)
 
 -- | See @"Unlift.Exception".throwIO@.
 --
--- @since 1.1.0.2
+-- @since 1.1.2.0
 throwIO
   :: forall n e sig m a
    . (MonadUnliftIO n, Exc.Exception e, Has (Lift n) sig m)
@@ -90,7 +90,7 @@ throwIO = sendM @n . Exc.throwIO
 
 -- | See @"Control.Exception".'Exc.ioError'@.
 --
--- @since 1.1.0.2
+-- @since 1.1.2.0
 ioError
   :: forall n sig m a
    . (MonadUnliftIO n, Has (Lift n) sig m)
@@ -100,7 +100,7 @@ ioError = sendM @n . liftIO . EUnsafe.ioError
 
 -- | See @"Control.Exception".'Exc.throwTo'@.
 --
--- @since 1.1.0.2
+-- @since 1.1.2.0
 throwTo
   :: forall n e sig m a
    . (MonadUnliftIO n, Exc.Exception e, Has (Lift n) sig m)
@@ -111,7 +111,7 @@ throwTo thread = sendM @n . liftIO . EUnsafe.throwTo thread
 
 -- | See @"UnliftIO.Exception".catch@.
 --
--- @since 1.1.0.2
+-- @since 1.1.2.0
 catch
   :: forall n e sig m a
    . (MonadUnliftIO n, Exc.Exception e, Has (Lift n) sig m)
@@ -123,7 +123,7 @@ catch m h = liftWith @n $
 
 -- | See @"UnliftIO.Exception".catches@.
 --
--- @since 1.1.0.2
+-- @since 1.1.2.0
 catches
   :: forall n sig m a
    . (MonadUnliftIO n, Has (Lift n) sig m)
@@ -145,7 +145,7 @@ deriving instance Functor m => Functor (Handler m)
 
 -- | See @"UnliftIO.Exception".catchJust@.
 --
--- @since 1.1.0.2
+-- @since 1.1.2.0
 catchJust
   :: forall n e sig m a b
    . (MonadUnliftIO n, Exc.Exception e, Has (Lift n) sig m)
@@ -158,7 +158,7 @@ catchJust p m h = liftWith @n $
 
 -- | See @"Control.Exception".'Exc.handle'@.
 --
--- @since 1.1.0.2
+-- @since 1.1.2.0
 handle
   :: forall n e sig m a
    . (MonadUnliftIO n, Exc.Exception e, Has (Lift n) sig m)
@@ -169,7 +169,7 @@ handle = flip $ catch @n
 
 -- | See @"Control.Exception".'Exc.handleJust'@.
 --
--- @since 1.1.0.2
+-- @since 1.1.2.0
 handleJust
   :: forall n e sig m a b
    . (MonadUnliftIO n, Exc.Exception e, Has (Lift n) sig m)
@@ -181,7 +181,7 @@ handleJust p = flip (catchJust @n p)
 
 -- | See @"Control.Exception".'Exc.try'@.
 --
--- @since 1.1.0.2
+-- @since 1.1.2.0
 try
   :: forall n e sig m a b
    . (MonadUnliftIO n, Exc.Exception e, Has (Lift n) sig m)
@@ -191,7 +191,7 @@ try m = catch @n (Right <$> m) (pure . Left)
 
 -- | See @"Control.Exception".'Exc.tryJust'@.
 --
--- @since 1.1.0.2
+-- @since 1.1.2.0
 tryJust
   :: forall n e sig m a b
    . (MonadUnliftIO n, Exc.Exception e, Has (Lift n) sig m)
@@ -202,13 +202,13 @@ tryJust p m = catchJust @n p (Right <$> m) (pure . Left)
 
 -- | See @"UnliftIO.Exception".evaluate@.
 --
--- @since 1.1.0.2
+-- @since 1.1.2.0
 evaluate :: forall n sig m a. (MonadUnliftIO n, Has (Lift n) sig m) => a -> m a
 evaluate = sendM @n . Exc.evaluate
 
 -- | See @"UnliftIO.Exception".mask@.
 --
--- @since 1.1.0.2
+-- @since 1.1.2.0
 mask
   :: forall n sig m a b
    . (MonadUnliftIO n, Has (Lift n) sig m)
@@ -219,7 +219,7 @@ mask with = liftWith @n $ \ run ctx -> Exc.mask $ \ restore ->
 
 -- | See @"Control.Exception".'Exc.mask_'@.
 --
--- @since 1.1.0.2
+-- @since 1.1.2.0
 mask_
   :: forall n sig m a
    . (MonadUnliftIO n, Has (Lift n) sig m)
@@ -229,7 +229,7 @@ mask_ m = mask @n (const m)
 
 -- | See @"UnliftIO.Exception".uninterruptibleMask@.
 --
--- @since 1.1.0.2
+-- @since 1.1.2.0
 uninterruptibleMask
   :: forall n sig m a b
    . (MonadUnliftIO n, Has (Lift n) sig m)
@@ -242,7 +242,7 @@ uninterruptibleMask with = liftWith @n $
 
 -- | See @"Control.Exception".'Exc.uninterruptibleMask_'@.
 --
--- @since 1.1.0.2
+-- @since 1.1.2.0
 uninterruptibleMask_
   :: forall n sig m a
    . (MonadUnliftIO n, Has (Lift n) sig m)
@@ -252,7 +252,7 @@ uninterruptibleMask_ m = uninterruptibleMask @n (const m)
 
 -- | See @"Control.Exception".'Exc.getMaskingState'@.
 --
--- @since 1.1.0.2
+-- @since 1.1.2.0
 getMaskingState
   :: forall n sig m
    . (MonadUnliftIO n, Has (Lift n) sig m)
@@ -261,7 +261,7 @@ getMaskingState = sendM @n (liftIO EUnsafe.getMaskingState)
 
 -- | See @"Control.Exception".'Exc.interruptible'@.
 --
--- @since 1.1.0.2
+-- @since 1.1.2.0
 interruptible
   :: forall n sig m a
    . (MonadUnliftIO n, Has (Lift n) sig m)
@@ -272,7 +272,7 @@ interruptible m = liftWith @n $ \ run ctx -> withRunInIO $ \runInIO ->
 
 -- | See @"Control.Exception".'Exc.allowInterrupt'@.
 --
--- @since 1.1.0.2
+-- @since 1.1.2.0
 allowInterrupt
   :: forall n sig m a
    . (MonadUnliftIO n, Has (Lift n) sig m)
@@ -281,7 +281,7 @@ allowInterrupt = sendM @n (liftIO EUnsafe.allowInterrupt)
 
 -- | See @"Control.Exception".'Exc.bracket'@.
 --
--- @since 1.1.0.2
+-- @since 1.1.2.0
 bracket
   :: forall n sig m a b c
    . (MonadUnliftIO n, Has (Lift n) sig m)
@@ -296,7 +296,7 @@ bracket acquire release m = mask @n $ \ restore -> do
 
 -- | See @"Control.Exception".'Exc.bracket_'@.
 --
--- @since 1.1.0.2
+-- @since 1.1.2.0
 bracket_
   :: forall n sig m a b c
    . (MonadUnliftIO n, Has (Lift n) sig m)
@@ -308,7 +308,7 @@ bracket_ before after thing = bracket @n before (const after) (const thing)
 
 -- | See @"Control.Exception".'Exc.bracketOnError'@.
 --
--- @since 1.1.0.2
+-- @since 1.1.2.0
 bracketOnError
   :: forall n sig m a b c
    . (MonadUnliftIO n, Has (Lift n) sig m)
@@ -322,7 +322,7 @@ bracketOnError acquire release m = mask @n $ \ restore -> do
 
 -- | See @"Control.Exception".'Exc.finally'@.
 --
--- @since 1.1.0.2
+-- @since 1.1.2.0
 finally
   :: forall n sig m a b
    . (MonadUnliftIO n, Has (Lift n) sig m)
@@ -334,7 +334,7 @@ finally m sequel = mask @n $
 
 -- | See @"Control.Exception".'Exc.onException'@.
 --
--- @since 1.1.0.2
+-- @since 1.1.2.0
 onException
   :: forall n sig m a b
    . (MonadUnliftIO n, Has (Lift n) sig m)

@@ -4,7 +4,7 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-21.11";
     flake-compat = {
-      url = github:edolstra/flake-compat;
+      url = "github:edolstra/flake-compat";
       flake = false;
     };
     flake-utils = {
@@ -19,8 +19,12 @@
     in
     {
       overlay = final: prev: {
-        haskellPackages = prev.haskellPackages.extend (_self: _super: {
-          "${name}" = prev.haskellPackages.callCabal2nix name self { };
+        haskellPackages = prev.haskellPackages.override (old: {
+          overrides = prev.lib.composeExtensions
+            (old.overrides or (_: _: {}))
+            (_self: _super: {
+              "${name}" = final.haskellPackages.callCabal2nix name self { };
+            });
         });
       };
     } // (flake-utils.lib.eachDefaultSystem (system:
