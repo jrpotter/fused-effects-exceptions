@@ -206,7 +206,7 @@ mask_
    . (MonadUnliftIO n, Has (Lift n) sig m)
   => m a
   -> m a
-mask_ m = mask @n (const m)
+mask_ m = mask @n (\_ -> m)
 
 -- | See @"UnliftIO.Exception".uninterruptibleMask@.
 --
@@ -229,7 +229,7 @@ uninterruptibleMask_
    . (MonadUnliftIO n, Has (Lift n) sig m)
   => m a
   -> m a
-uninterruptibleMask_ m = uninterruptibleMask @n (const m)
+uninterruptibleMask_ m = uninterruptibleMask @n (\_ -> m)
 
 -- | See @"UnliftIO.Exception".'Exc.bracket'@.
 --
