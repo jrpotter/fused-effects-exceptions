@@ -3,7 +3,7 @@
 {-# LANGUAGE RankNTypes #-}
 {-# LANGUAGE StandaloneDeriving #-}
 {-# LANGUAGE TypeApplications #-}
--- | Operations from "Control.Exception" and "UnliftIO.Exception" lifted into effectful contexts using 'Control.Effect.Lift.Lift'.
+-- | Operations from "Control.Exception" lifted into effectful contexts using 'Control.Effect.Lift.Lift'.
 --
 -- @since 1.0.0.0
 module Control.Effect.Exception
@@ -93,19 +93,19 @@ ioError = U.ioError @IO
 throwTo :: (Exc.Exception e, Has (Lift IO) sig m) => ThreadId -> e -> m ()
 throwTo = U.throwTo @IO
 
--- | See @"UnliftIO.Exception".catch@.
+-- | See @"Control.Exception".catch@.
 --
 -- @since 1.0.0.0
 catch :: (Exc.Exception e, Has (Lift IO) sig m) => m a -> (e -> m a) -> m a
 catch = U.catch @IO
 
--- | See @"UnliftIO.Exception".catches@.
+-- | See @"Control.Exception".catches@.
 --
 -- @since 1.0.0.0
 catches :: Has (Lift IO) sig m => m a -> [U.Handler m a] -> m a
 catches = U.catches @IO
 
--- | See @"UnliftIO.Exception".catchJust@.
+-- | See @"Control.Exception".catchJust@.
 --
 -- @since 1.0.0.0
 catchJust
@@ -145,13 +145,13 @@ try = U.try @IO
 tryJust :: (Exc.Exception e, Has (Lift IO) sig m) => (e -> Maybe b) -> m a -> m (Either b a)
 tryJust = U.tryJust @IO
 
--- | See @"UnliftIO.Exception".evaluate@.
+-- | See @"Control.Exception".evaluate@.
 --
 -- @since 1.0.0.0
 evaluate :: Has (Lift IO) sig m => a -> m a
 evaluate = U.evaluate @IO
 
--- | See @"UnliftIO.Exception".mask@.
+-- | See @"Control.Exception".mask@.
 --
 -- @since 1.0.0.0
 mask :: Has (Lift IO) sig m => ((forall a . m a -> m a) -> m b) -> m b
@@ -163,7 +163,7 @@ mask = U.mask @IO
 mask_ :: Has (Lift IO) sig m => m a -> m a
 mask_ = U.mask_ @IO
 
--- | See @"UnliftIO.Exception".uninterruptibleMask@.
+-- | See @"Control.Exception".uninterruptibleMask@.
 --
 -- @since 1.0.0.0
 uninterruptibleMask :: Has (Lift IO) sig m => ((forall a . m a -> m a) -> m b) -> m b

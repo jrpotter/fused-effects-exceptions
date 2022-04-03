@@ -5,7 +5,7 @@
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE StandaloneDeriving #-}
 {-# LANGUAGE TypeApplications #-}
--- | Operations from "Control.Exception" and "UnliftIO.Exception" lifted into effectful contexts using 'Control.Effect.Lift.Lift'.
+-- | Operations from "Control.Exception" lifted into effectful contexts using 'Control.Effect.Lift.Lift'.
 --
 -- @since 1.1.2.0
 module Control.Effect.Exception.UnliftIO
@@ -78,7 +78,7 @@ import qualified Control.Exception as EUnsafe
 import           Control.Monad.IO.Unlift (MonadIO, MonadUnliftIO, liftIO, withRunInIO)
 import           Prelude hiding (ioError)
 
--- | See @"Unlift.Exception".throwIO@.
+-- | See @"Control.Exception".throwIO@.
 --
 -- @since 1.1.2.0
 throwIO
@@ -109,7 +109,7 @@ throwTo
   -> m ()
 throwTo thread = sendM @n . liftIO . EUnsafe.throwTo thread
 
--- | See @"UnliftIO.Exception".catch@.
+-- | See @"Control.Exception".catch@.
 --
 -- @since 1.1.2.0
 catch
@@ -121,7 +121,7 @@ catch
 catch m h = liftWith @n $
   \run ctx -> run (m <$ ctx) `Exc.catch` (run . (<$ ctx) . h)
 
--- | See @"UnliftIO.Exception".catches@.
+-- | See @"Control.Exception".catches@.
 --
 -- @since 1.1.2.0
 catches
@@ -143,7 +143,7 @@ data Handler m a
 
 deriving instance Functor m => Functor (Handler m)
 
--- | See @"UnliftIO.Exception".catchJust@.
+-- | See @"Control.Exception".catchJust@.
 --
 -- @since 1.1.2.0
 catchJust
@@ -200,13 +200,13 @@ tryJust
   -> m (Either b a)
 tryJust p m = catchJust @n p (Right <$> m) (pure . Left)
 
--- | See @"UnliftIO.Exception".evaluate@.
+-- | See @"Control.Exception".evaluate@.
 --
 -- @since 1.1.2.0
 evaluate :: forall n sig m a. (MonadUnliftIO n, Has (Lift n) sig m) => a -> m a
 evaluate = sendM @n . Exc.evaluate
 
--- | See @"UnliftIO.Exception".mask@.
+-- | See @"Control.Exception".mask@.
 --
 -- @since 1.1.2.0
 mask
@@ -227,7 +227,7 @@ mask_
   -> m a
 mask_ m = mask @n (const m)
 
--- | See @"UnliftIO.Exception".uninterruptibleMask@.
+-- | See @"Control.Exception".uninterruptibleMask@.
 --
 -- @since 1.1.2.0
 uninterruptibleMask
